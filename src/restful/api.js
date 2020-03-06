@@ -173,6 +173,15 @@ export const delAllTestdata = (params,data) => {
     return axios.delete('/api/fastrunner/file/-1', {params,data})
 };
 
+
+export const excelImport = url =>{
+    return baseUrl + '/api/fastrunner/excelimport/'
+};
+
+export const excelExport = params =>{
+    return axios.post( '/api/fastrunner/excelexport/', params, {responseType: 'arraybuffer'}).then(res => res.data)
+};
+
 export const addAPI = params => {
     return axios.post('/api/fastrunner/api/', params).then(res => res.data)
 };

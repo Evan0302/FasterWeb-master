@@ -381,6 +381,7 @@
 
             handleSelectionChange(val) {
                 this.selectAPI = val;
+                this.$emit('onselect', val);
             },
 
             toggleAll() {

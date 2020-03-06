@@ -92,6 +92,32 @@
                         @click="del = !del"
                         title="批量删除"
                     ></el-button>
+                    <el-button
+                            :disabled="currentNode === '' "
+                            type="primary"
+                            size="small"
+                            icon="el-icon-upload"
+                            @click="dialogImportVisible = true"
+                        >导入接口
+                        </el-button>
+                        <upxlsDialog
+                            :ishow.sync="dialogImportVisible"
+                            :node=currentNode.id
+                            :project=$route.params.id
+                        >
+                        </upxlsDialog>
+                        <!--                    <span>{{ currentNode.id}},{{ $route.params.id }}</span>-->
+
+                        <el-button
+                            :disabled="selectedApi.length===0 "
+                            v-if="!addAPIFlag"
+                            type="success"
+                            size="small"
+                            icon="el-icon-goods"
+                            plain
+                            @click="openmsg"
+                        >导出接口
+                        </el-button>
                     &nbsp环境:
                     <el-select
                         placeholder="请选择"
@@ -183,6 +209,7 @@
                 <api-list
                     v-show="!addAPIFlag"
                     v-on:api="handleAPI"
+                    v-on:onselect="handleSelect"
                     :node="currentNode !== '' ? currentNode.id : '' "
                     :project="$route.params.id"
                     :config="currentConfig"
@@ -202,6 +229,7 @@
 <script>
     import ApiBody from './components/ApiBody'
     import ApiList from './components/ApiList'
+    import upxlsDialog from './components/upxlsDialog'
 
     export default {
         watch: {
@@ -211,7 +239,8 @@
         },
         components: {
             ApiBody,
-            ApiList
+            ApiList,
+            upxlsDialog
         },
 
         computed: {
@@ -351,10 +380,40 @@
                 data: '',
                 filterText: '',
                 expand: '&#xe65f;',
-                dataTree: []
+                dataTree: [],
+                dialogImportVisible: false,
+                selectedApi: []
+
             }
         },
         methods: {
+            openmsg() {
+                var exportapis = []
+                var response = {}
+                this.selectedApi.forEach((value, index) => {
+                    exportapis.push({'id': value['id'], 'name': value['name']})
+                })
+
+                this.$api.excelExport({'apilist': exportapis}).then(res => {
+                    let blob = new Blob([res], {type: 'application/x-xls'});
+                    var filename = "download.xls";
+
+                    var a = document.createElement('a');
+                    var url = window.URL.createObjectURL(blob);
+                    a.href = url;
+                    a.download = filename;
+                    var body = document.getElementsByTagName('body')[0];
+                    body.appendChild(a);
+                    a.click();
+                    body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                })
+
+                // this.$message({
+                //     message: '导出测试API到Excel，待完成...\n' + JSON.stringify(response),
+                //     type: 'warning'
+                // });
+            },
             handleDragEnd() {
                 this.updateTree(false);
             },
@@ -366,6 +425,10 @@
             handleAPI(response) {
                 this.addAPIFlag = true;
                 this.response = response;
+            },
+            handleSelect(val) {
+                //    处理API选择
+                this.selectedApi = val
             },
 
             getTree() {
