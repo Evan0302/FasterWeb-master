@@ -13,7 +13,13 @@
                                         <div class="err_msg" id="email_err" v-html="usernameInvalid" @mouseover="usernameInvalid=''"></div>
                                     </div>
                                     <div class="form-input-div">
-                                        <el-input prefix-icon="el-icon-lock" placeholder="请输入密码" v-model="loginForm.password" show-password id="pwd" type="text" maxlength="30" clearable></el-input>
+                                        <el-input prefix-icon="el-icon-lock" placeholder="请输入密码"
+                                                  v-model="loginForm.password"
+                                                  show-password id="pwd" type="text" maxlength="30" clearable
+                                                  @keyup.enter.native="submitForm"
+                                        >
+
+                                        </el-input>
                                         <div class="err_msg" id="pwd_err" v-html="passwordInvalid" @mouseover="passwordInvalid= ''"></div>
                                     </div>
                                     <div class="form-submit">

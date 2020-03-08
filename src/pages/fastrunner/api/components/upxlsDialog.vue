@@ -41,7 +41,7 @@
 </template>
 <script>
     // import UploadExcelComponent from './UploadExcel'
-    // import XLSX from "xlsx";
+    import XLSX from "xlsx";
     import store from "../../../../store/state";
 
     export default {
