@@ -92,7 +92,8 @@
                         @click="del = !del"
                         title="批量删除"
                     ></el-button>
-                    <el-button
+                    <el-tooltip class="item" content="批量导入excel、Har文件" placement="bottom-start" effect="light">
+                        <el-button
                             :disabled="currentNode === '' "
                             type="primary"
                             size="small"
@@ -100,6 +101,7 @@
                             @click="dialogImportVisible = true"
                         >导入接口
                         </el-button>
+                    </el-tooltip>
                         <upxlsDialog
                             :ishow.sync="dialogImportVisible"
                             :node=currentNode.id

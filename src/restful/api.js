@@ -4,7 +4,7 @@ import router from '../router'
 import {Notification} from 'element-ui';
 
 if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'){
-    var base_Url = window.location.protocol + '//' + window.location.hostname + ':' +'8000';
+    var base_Url = window.location.protocol + '//' + window.location.hostname + ':' +'8001';
 }else{
     var base_Url = window.location.protocol + '//' + window.location.host ;
 }
@@ -174,8 +174,8 @@ export const delAllTestdata = (params,data) => {
 };
 
 
-export const excelImport = url =>{
-    return baseUrl + '/api/fastrunner/excelimport/'
+export const fileImport = url =>{
+    return baseUrl + '/api/fastrunner/fileimport/'
 };
 
 export const excelExport = params =>{

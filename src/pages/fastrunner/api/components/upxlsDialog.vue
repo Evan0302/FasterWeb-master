@@ -20,7 +20,7 @@
                     >
             <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
             <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传Excel文件，且不超过500kb</div>
+            <div slot="tip" class="el-upload__tip">支持上传Excel文件、Har文件，且不超过500kb</div>
             <!--            <span>{{ this.node}}, {{ this.project }}</span>-->
 
 
@@ -79,7 +79,7 @@
         methods: {
 
             uploadExcel() {
-                return this.$api.excelImport();
+                return this.$api.fileImport();
             },
             uploadSuccess(response, file, fileList) {
                 this.resetSelect();
@@ -102,13 +102,18 @@
                 this.sheetname=''
             },
             fileChange(file, fileList) {
-                if (fileList.length>0) {
-                    this.readerData(file.raw)
-                    // this.$message({
-                    //     message: '要打开的文件在这里.' + JSON.stringify(this.sheets),
-                    //     type: 'info'
-                    // })
-                    this.sheetCanSelect=true
+                var ext = file.name.slice(file.name.lastIndexOf(".")+1).toLowerCase();
+
+                if (fileList.length>0 ) {
+                    if (ext == "xls"){
+                        this.readerData(file.raw)
+                        // this.$message({
+                        //     message: '要打开的文件在这里.' + JSON.stringify(this.sheets),
+                        //     type: 'info'
+                        // })
+                        this.sheetCanSelect=true
+                    }
+
                 }else{
                     this.resetSelect()
                 }
