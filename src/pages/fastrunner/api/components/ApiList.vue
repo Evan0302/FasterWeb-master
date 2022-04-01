@@ -12,7 +12,7 @@
                         </el-checkbox>
                     </el-col>
 
-                    <el-col :span="7" style="margin-left: 0px">
+                    <el-col :span="6" style="margin-left: 0px">
                         <el-input placeholder="请输入接口名称" clearable v-model="search">
                             <el-button slot="append" icon="el-icon-search" @click="getAPIList"></el-button>
                         </el-input>
@@ -381,6 +381,7 @@
 
             handleSelectionChange(val) {
                 this.selectAPI = val;
+                this.$emit('onselect', val);
             },
 
             toggleAll() {
@@ -477,6 +478,6 @@
 </script>
 
 <style scoped>
-  
+
 
 </style>

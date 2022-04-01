@@ -4,7 +4,7 @@ import router from '../router'
 import {Notification} from 'element-ui';
 
 if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'){
-    var base_Url = window.location.protocol + '//' + window.location.hostname + ':' +'8000';
+    var base_Url = window.location.protocol + '//' + window.location.hostname + ':' +'8001';
 }else{
     var base_Url = window.location.protocol + '//' + window.location.host ;
 }
@@ -171,6 +171,15 @@ export const deleteTestdata = (url, params) => {
 
 export const delAllTestdata = (params,data) => {
     return axios.delete('/api/fastrunner/file/-1', {params,data})
+};
+
+
+export const fileImport = url =>{
+    return baseUrl + '/api/fastrunner/fileimport/'
+};
+
+export const excelExport = params =>{
+    return axios.post( '/api/fastrunner/excelexport/', params, {responseType: 'arraybuffer'}).then(res => res.data)
 };
 
 export const addAPI = params => {
